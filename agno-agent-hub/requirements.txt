@@ -1,0 +1,6 @@
+agno
+streamlit
+python-dotenv
+ddgs
+yfinance
+groq
