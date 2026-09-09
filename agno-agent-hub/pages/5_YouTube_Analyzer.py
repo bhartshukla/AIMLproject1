@@ -5,8 +5,8 @@ from agents.youtube_agent import build_youtube_agent
 
 load_dotenv()
 
-st.set_page_config(page_title="YouTube Video Analyzer", page_icon="🎥")
-st.title("🎥 AI YouTube Video Analyzer")
+st.set_page_config(page_title="YouTube Video Analyzer")
+st.title("AI YouTube Video Analyzer")
 st.caption("Paste a video link and get a timestamped breakdown.")
 
 

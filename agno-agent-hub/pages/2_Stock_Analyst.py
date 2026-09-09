@@ -5,8 +5,8 @@ from agents.stock_agent import build_stock_agent
 
 load_dotenv()
 
-st.set_page_config(page_title="Investment Analyst", page_icon="📈")
-st.title("📈 Investment Analyst")
+st.set_page_config(page_title="Investment Analyst")
+st.title("Investment Analyst")
 st.caption("Ask about stock prices, fundamentals, and analyst recommendations.")
 
 

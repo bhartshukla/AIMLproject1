@@ -1,4 +1,4 @@
-"""Memory Chat Agent — remembers facts about each user across turns via SQLite."""
+"""Memory Chat Agent - remembers facts about each user across turns via SQLite."""
 
 from agno.agent import Agent
 from agno.db.sqlite import SqliteDb
@@ -12,7 +12,7 @@ def build_memory_agent(db_file: str = DB_FILE) -> Agent:
     return Agent(
         name="Memory Chat Agent",
         db=db,
-        model=Groq(id="qwen/qwen3-32b"),
+        model=Groq(id="openai/gpt-oss-120b"),
         markdown=True,
         add_history_to_context=True,
         enable_user_memories=True,

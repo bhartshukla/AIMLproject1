@@ -1,4 +1,4 @@
-"""Investment Analyst Agent — stock prices, fundamentals, and analyst views."""
+"""Investment Analyst Agent - stock prices, fundamentals, and analyst views."""
 
 from agno.agent import Agent
 from agno.models.groq import Groq
@@ -9,7 +9,7 @@ from agno.tools.yfinance import YFinanceTools
 def build_stock_agent() -> Agent:
     return Agent(
         name="Investment Analyst",
-        model=Groq(id="qwen/qwen3-32b"),
+        model=Groq(id="openai/gpt-oss-120b"),
         tools=[YFinanceTools(), DuckDuckGoTools()],
         markdown=True,
         add_datetime_to_context=True,

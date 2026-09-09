@@ -1,4 +1,4 @@
-"""Travel Safety Agent — answers travel/safety questions using live web search."""
+"""Travel Safety Agent - answers travel/safety questions using live web search."""
 
 from agno.agent import Agent
 from agno.models.groq import Groq
@@ -8,7 +8,7 @@ from agno.tools.duckduckgo import DuckDuckGoTools
 def build_travel_agent() -> Agent:
     return Agent(
         name="Travel Safety Agent",
-        model=Groq(id="qwen/qwen3-32b"),
+        model=Groq(id="openai/gpt-oss-120b"),
         tools=[DuckDuckGoTools()],
         markdown=True,
         instructions=(

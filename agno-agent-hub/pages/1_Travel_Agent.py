@@ -5,8 +5,8 @@ from agents.travel_agent import build_travel_agent
 
 load_dotenv()
 
-st.set_page_config(page_title="Travel Safety Agent", page_icon="✈️")
-st.title("✈️ Travel Safety Agent")
+st.set_page_config(page_title="Travel Safety Agent")
+st.title("Travel Safety Agent")
 st.caption("Ask about current safety, weather, or visa info before you travel anywhere.")
 
 

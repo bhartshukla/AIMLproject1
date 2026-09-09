@@ -5,8 +5,8 @@ from agents.memory_agent import build_memory_agent, get_memories
 
 load_dotenv()
 
-st.set_page_config(page_title="Memory Chat Agent", page_icon="🧠")
-st.title("🧠 Memory Chat Agent")
+st.set_page_config(page_title="Memory Chat Agent")
+st.title("Memory Chat Agent")
 st.caption("This agent remembers facts about you across conversations (stored in SQLite).")
 
 

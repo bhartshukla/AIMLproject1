@@ -1,4 +1,4 @@
-"""YouTube Video Analyzer Agent — timestamped, structured video breakdowns."""
+"""YouTube Video Analyzer Agent - timestamped, structured video breakdowns."""
 
 from textwrap import dedent
 
@@ -10,11 +10,11 @@ from agno.tools.youtube import YouTubeTools
 def build_youtube_agent() -> Agent:
     return Agent(
         name="YouTube Agent",
-        model=Groq(id="qwen/qwen3-32b"),
+        model=Groq(id="openai/gpt-oss-120b"),
         tools=[YouTubeTools()],
         instructions=dedent(
             """\
-            You are an expert YouTube content analyst with a keen eye for detail! 🎓
+            You are an expert YouTube content analyst with a keen eye for detail.
             Follow these steps for comprehensive video analysis:
             1. Video Overview
             - Check video length and basic metadata
@@ -33,12 +33,7 @@ def build_youtube_agent() -> Agent:
             Your analysis style:
             - Begin with a video overview
             - Use clear, descriptive segment titles
-            - Include relevant emojis for content types:
-            📚 Educational
-            💻 Technical
-            🎮 Gaming
-            📱 Tech Review
-            🎨 Creative
+            - Label content types plainly (Educational, Technical, Gaming, Tech Review, Creative)
             - Highlight key learning points
             - Note practical demonstrations
             - Mark important references

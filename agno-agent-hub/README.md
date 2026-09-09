@@ -1,14 +1,14 @@
-# 🤖 AI Agent Hub
+# AI Agent Hub
 
-A single Streamlit app that brings together five Agno agents in one place:
+A single Streamlit app that brings together five Agno agents in one place. Every agent uses one free provider - Groq - and nothing else.
 
 | Page | Agent | Model | Tools |
 |---|---|---|---|
-| ✈️ Travel Agent | Travel safety / advisory Q&A | Groq `qwen/qwen3-32b` (free) | DuckDuckGo web search |
-| 📈 Stock Analyst | Stock prices, fundamentals, recommendations | Groq `qwen/qwen3-32b` (free) | YFinance + DuckDuckGo |
-| 🧠 Memory Chat | Remembers facts about each user | Groq `qwen/qwen3-32b` (free) | SQLite (`agno_memory.db`) |
-| 🌐 Translator Team | 3 agents (EN/ZH/HI) answer together | Groq `qwen/qwen3-32b` (free) | Agno `Team` |
-| 🎥 YouTube Analyzer | Timestamped, structured video breakdown | Groq `qwen/qwen3-32b` (free) | `YouTubeTools` |
+| Travel Agent | Travel safety / advisory Q&A | Groq `openai/gpt-oss-120b` (free) | DuckDuckGo web search |
+| Stock Analyst | Stock prices, fundamentals, recommendations | Groq `openai/gpt-oss-120b` (free) | YFinance + DuckDuckGo |
+| Memory Chat | Remembers facts about each user | Groq `openai/gpt-oss-120b` (free) | SQLite (`agno_memory.db`) |
+| Translator Team | 3 agents (EN/ZH/HI) answer together | Groq `openai/gpt-oss-120b` (free) | Agno `Team` |
+| YouTube Analyzer | Timestamped, structured video breakdown | Groq `openai/gpt-oss-120b` (free) | `YouTubeTools` |
 
 ## Project structure
 
@@ -22,11 +22,11 @@ agno-agent-hub/
 │   ├── translator_team.py
 │   └── youtube_agent.py
 ├── pages/                       # Streamlit auto-discovers these as sidebar pages
-│   ├── 1_✈️_Travel_Agent.py
-│   ├── 2_📈_Stock_Analyst.py
-│   ├── 3_🧠_Memory_Chat.py
-│   ├── 4_🌐_Translator_Team.py
-│   └── 5_🎥_YouTube_Analyzer.py
+│   ├── 1_Travel_Agent.py
+│   ├── 2_Stock_Analyst.py
+│   ├── 3_Memory_Chat.py
+│   ├── 4_Translator_Team.py
+│   └── 5_YouTube_Analyzer.py
 ├── requirements.txt
 └── .env.example
 ```
@@ -44,26 +44,28 @@ agno-agent-hub/
    pip install -r requirements.txt
    ```
 
-3. Environment variables — copy `.env.example` to `.env` and fill in your key:
+3. Environment variables - copy `.env.example` to `.env` and fill in your key:
    ```bash
    cp .env.example .env
    ```
-   - `GROQ_API_KEY` — **free**, needed for all 5 agents. Sign up at https://console.groq.com/keys — no credit card required, generous free-tier rate limits.
+   - `GROQ_API_KEY` - free, needed for all 5 agents. Sign up at https://console.groq.com/keys - no credit card required.
 
 4. Run the app:
    ```bash
    streamlit run app.py
    ```
 
-5. Open `http://localhost:8501` in your browser — pick any agent from the sidebar.
+5. Open `http://localhost:8501` in your browser - pick any agent from the sidebar.
 
 ## Notes
 
-- Each agent lives in its own file under `agents/`, so it can be imported and tested independently of the Streamlit UI (like the original standalone scripts).
-- The Memory Chat agent creates an `agno_memory.db` (SQLite) file in the project root on first use — it stores memories separately per `user_id`.
-- Want to run just one agent without the full app? Import the corresponding `agents/*.py` file as a standalone script and add your own `if __name__ == "__main__":` block.
-- The whole project runs on one free provider (Groq) — no paid API key needed. To try another free provider (Google Gemini free tier, or a local Ollama model), just change the `model=Groq(...)` line in the relevant `agents/*.py` file.
+- Each agent lives in its own file under `agents/`, so it can be imported and tested independently of the Streamlit UI.
+- The Memory Chat agent creates an `agno_memory.db` (SQLite) file in the project root on first use - it stores memories separately per `user_id`.
+- Every single `Agent`/`Team` instance in this project (8 total across 5 files) explicitly sets `model=Groq(id="openai/gpt-oss-120b")` - nothing silently falls back to a different provider, so one `GROQ_API_KEY` is all you need.
+- Page filenames use plain text only (no emoji) to avoid encoding/mojibake issues in some Windows terminals and browsers.
 
 ## Troubleshooting
 
-- **`ModuleNotFoundError: No module named 'ddgs'`** — newer versions of `agno` use the `ddgs` package (not the older `duckduckgo-search`) for web search. Run `pip install ddgs` or reinstall with the updated `requirements.txt`.
+- **`ModuleNotFoundError: No module named 'ddgs'`** - newer versions of `agno` use the `ddgs` package (not the older `duckduckgo-search`) for web search. Run `pip install ddgs` or reinstall with the updated `requirements.txt`.
+- **`model_not_found` / "The model `qwen/qwen3-32b` does not exist"** - Groq deprecated `qwen/qwen3-32b`. This project now uses `openai/gpt-oss-120b`, Groq's recommended free replacement. If you see this error, make sure you're using the latest version of the files in this project.
+- **`GROQ_API_KEY not set`** - make sure `.env` exists in the project root (same folder as `app.py`), contains a real key (not the placeholder), and that you restarted `streamlit run app.py` after creating/editing it.

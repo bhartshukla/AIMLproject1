@@ -5,8 +5,8 @@ from agents.translator_team import build_translator_team
 
 load_dotenv()
 
-st.set_page_config(page_title="Translator Team", page_icon="🌐")
-st.title("🌐 Answer & Translation Team")
+st.set_page_config(page_title="Translator Team")
+st.title("Answer & Translation Team")
 st.caption("One question, answered in English, Chinese, and Hindi all at once.")
 
 
