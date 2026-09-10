@@ -63,9 +63,12 @@ agno-agent-hub/
 - The Memory Chat agent creates an `agno_memory.db` (SQLite) file in the project root on first use - it stores memories separately per `user_id`.
 - Every single `Agent`/`Team` instance in this project (8 total across 5 files) explicitly sets `model=Groq(id="openai/gpt-oss-120b")` - nothing silently falls back to a different provider, so one `GROQ_API_KEY` is all you need.
 - Page filenames use plain text only (no emoji) to avoid encoding/mojibake issues in some Windows terminals and browsers.
+- `agents/utils.py` has a `run_with_retry()` helper that every page uses instead of calling `agent.run()` directly. It automatically retries up to 2 times (with a short delay) if the model emits a malformed tool call - a known occasional glitch with some Groq models - so a transient error doesn't crash the chat. If all retries fail, it returns a friendly in-chat error message instead of raising.
+- The Travel Agent and Memory Chat agent are instructed to answer like a normal chat message (short, conversational, no giant tables or numbered mega-reports) unless you explicitly ask for a detailed report. The Stock Analyst and YouTube Analyzer keep their structured/table output since that's genuinely useful for that kind of data.
 
 ## Troubleshooting
 
 - **`ModuleNotFoundError: No module named 'ddgs'`** - newer versions of `agno` use the `ddgs` package (not the older `duckduckgo-search`) for web search. Run `pip install ddgs` or reinstall with the updated `requirements.txt`.
 - **`model_not_found` / "The model `qwen/qwen3-32b` does not exist"** - Groq deprecated `qwen/qwen3-32b`. This project now uses `openai/gpt-oss-120b`, Groq's recommended free replacement. If you see this error, make sure you're using the latest version of the files in this project.
 - **`GROQ_API_KEY not set`** - make sure `.env` exists in the project root (same folder as `app.py`), contains a real key (not the placeholder), and that you restarted `streamlit run app.py` after creating/editing it.
+- **`tool_use_failed` / "Tool call validation failed... parameters for tool web_search did not match schema"** - this is an occasional glitch where the model emits a malformed tool call. Every page now retries automatically via `run_with_retry()` (see `agents/utils.py`), so a single bad tool call no longer breaks the chat - you'll just see a short "Searching..." delay while it retries.

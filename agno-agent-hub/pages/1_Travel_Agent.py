@@ -2,6 +2,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from agents.travel_agent import build_travel_agent
+from agents.utils import run_with_retry
 
 load_dotenv()
 
@@ -33,7 +34,7 @@ if query:
 
     with st.chat_message("assistant"):
         with st.spinner("Searching and analyzing..."):
-            response = agent.run(query)
+            response = run_with_retry(agent, query)
         st.markdown(response.content)
 
     st.session_state.travel_messages.append({"role": "assistant", "content": response.content})

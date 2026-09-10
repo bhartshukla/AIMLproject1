@@ -2,6 +2,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from agents.stock_agent import build_stock_agent
+from agents.utils import run_with_retry
 
 load_dotenv()
 
@@ -33,7 +34,7 @@ if query:
 
     with st.chat_message("assistant"):
         with st.spinner("Pulling market data..."):
-            response = agent.run(query)
+            response = run_with_retry(agent, query)
         st.markdown(response.content)
 
     st.session_state.stock_messages.append({"role": "assistant", "content": response.content})

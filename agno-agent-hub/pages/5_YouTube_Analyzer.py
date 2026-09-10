@@ -2,6 +2,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from agents.youtube_agent import build_youtube_agent
+from agents.utils import run_with_retry
 
 load_dotenv()
 
@@ -22,7 +23,7 @@ button = st.button("Analyze Video")
 
 if video_url and button:
     with st.spinner("Analyzing video..."):
-        response = agent.run(f"Analyze this video: {video_url}")
+        response = run_with_retry(agent, f"Analyze this video: {video_url}")
 
     st.markdown("### Analysis Report of Video")
     st.markdown(response.content)

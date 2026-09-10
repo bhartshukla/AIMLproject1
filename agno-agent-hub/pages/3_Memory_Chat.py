@@ -2,6 +2,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from agents.memory_agent import build_memory_agent, get_memories
+from agents.utils import run_with_retry
 
 load_dotenv()
 
@@ -35,7 +36,7 @@ if query:
 
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            response = agent.run(query, user_id=user_id)
+            response = run_with_retry(agent, query, user_id=user_id)
         st.markdown(response.content)
 
     st.session_state.memory_messages.append({"role": "assistant", "content": response.content})

@@ -16,6 +16,12 @@ def build_memory_agent(db_file: str = DB_FILE) -> Agent:
         markdown=True,
         add_history_to_context=True,
         enable_user_memories=True,
+        instructions=(
+            "You are a friendly chat companion who remembers what the user tells you. "
+            "Reply like a normal chat message - a few short sentences, no headers, no "
+            "markdown tables, no bullet-point essays - unless the user specifically asks "
+            "for a list or a detailed breakdown."
+        ),
     )
 
 
