@@ -1,0 +1,17 @@
+{
+  "name": "tryai",
+  "version": "1.0.0",
+  "description": "tryAI - a ChatGPT-style chat UI built by Bharat, powered by a Modal-hosted DeepSeek endpoint.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "author": "Bharat",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "openai": "^4.55.0"
+  }
+}
